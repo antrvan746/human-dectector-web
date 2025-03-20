@@ -4,9 +4,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 import os
-from datetime import datetime
+import sys
 
-from ..main import app, Base, get_db
+# Add the backend directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from main import app, Base, get_db
 
 # Use in-memory SQLite for testing
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
@@ -106,7 +109,10 @@ def test_search_and_sort(client):
         assert data["items"][0]["author_name"] == "Alice"
 
         # Test sorting
-        response = client.get("/api/detections", params={"sort_by": "author_name", "order": "desc"})
+        response = client.get(
+            "/api/detections",
+            params={"sort_by": "author_name", "order": "desc"}
+        )
         assert response.status_code == 200
         data = response.json()
         assert data["items"][0]["author_name"] == "Bob"

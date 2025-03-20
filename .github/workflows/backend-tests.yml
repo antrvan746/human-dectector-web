@@ -57,4 +57,4 @@ jobs:
         PYTHONPATH: ${{ github.workspace }}/backend
       run: |
         cd backend
-        pytest -v 
+        python -m pytest -v 
