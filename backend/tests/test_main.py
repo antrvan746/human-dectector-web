@@ -35,8 +35,8 @@ app.dependency_overrides[get_db] = override_get_db
 def client():
     # Create the database tables
     Base.metadata.create_all(bind=engine)
-    with TestClient(app) as c:
-        yield c
+    test_client = TestClient(app)
+    yield test_client
     # Drop the database tables
     Base.metadata.drop_all(bind=engine)
 
