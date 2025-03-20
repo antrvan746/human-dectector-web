@@ -54,6 +54,7 @@ jobs:
     - name: Run tests
       env:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/human_detector_test
+        PYTHONPATH: ${{ github.workspace }}/backend
       run: |
         cd backend
         pytest -v 
